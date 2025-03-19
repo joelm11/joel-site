@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Joel Meuleman</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <script src="main.js"></script>
+</head>
+
+<body class="plant-theme">
+    <header class="plant-theme">
+        <div class="about-me">
+            <div class="about-me-text">
+                <h1>Joel Meuleman 💾</h1>
+                <p>Software Engineer | Audio Developer</p>
+                <div class="link-container">
+                    <a href="https://www.google.com" target="_blank">
+                        <i class="fab fa-linkedin"></i>
+                    </a>
+                    <a href="https://github.com/joelm11" target="_blank">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <a href="mailto:j.meuleman11@gmail.com" target="_blank">
+                        <i class="fas fa-envelope"></i>
+                    </a>
+                </div>
+                <button id="project-scroll-button">Check out my projects!</button>
+            </div>
+            <div class="watercolour-card2">
+                <img src="resources/LeafBorder2.png" alt="Watercolour leaves">
+            </div>
+        </div>
+        <div class="watercolour-card">
+            <img src="resources/LeavesSC copy.png" alt="Watercolour leaves">
+        </div>
+    </header>
+    
+    <section class="plant-theme" id="project-section">
+        <h2 style="text-shadow: 1px 1px 2px rgba(0,0,0,0.2);">My Projects -</h2>
+        <h3>
+            <a href="https://github.com/joelm11/pitch-shift">Pitch Shifter</a>
+        </h3>
+        <p> 
+            C++ pitch-shifting API implemented with a phase vocoder and windowed sinc resampling.
+        </p>
+        <div class="media-container">
+            <div class="media-item">
+                Original
+                <img src="resources/UnmodSpeechSpectrum.png" alt="Unmodified speech spectrum">
+                <audio controls src="resources/dialog_clip_stereo.wav"></audio>
+            </div>
+            <div class="media-item">
+                Pitched
+                <img src="resources/ModSpeechSpectrum.png" alt="Modified speech spectrum">
+                <audio controls src="resources/api-pitched.wav"></audio>
+            </div>
+        </div>
+    </section>
+
+</body>
