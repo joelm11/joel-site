@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Your Name - Botanical Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Georgia:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="page.css" />
+  </head>
+  <body class="antialiased">
+    <header
+      class="hero-background min-h-screen flex items-center justify-center py-16 px-4 relative"
+    >
+      <div
+        class="text-center bg-white bg-opacity-80 p-8 md:p-12 rounded-xl shadow-lg max-w-2xl mx-auto relative z-10"
+      >
+        <h1 class="text-5xl md:text-6xl font-bold mb-4 text-[#556b2f]">
+          Your Name
+        </h1>
+        <p class="text-xl md:text-2xl mb-8 text-[#8fbc8f]">
+          Software Developer & Creative
+        </p>
+        <a
+          href="#projects"
+          class="inline-block px-8 py-4 bg-[#8fbc8f] text-white font-semibold rounded-full shadow-md hover:bg-[#556b2f] transition duration-300 ease-in-out transform hover:scale-105"
+        >
+          View My Projects
+        </a>
+      </div>
+    </header>
+
+    <div
+      class="watercolor-divider rounded-b-xl shadow-lg -mt-16 relative z-0"
+    ></div>
+
+    <section id="projects" class="py-16 px-4 bg-[#f4f0e8]">
+      <div class="max-w-6xl mx-auto">
+        <h2
+          class="text-4xl md:text-5xl font-bold text-center mb-12 text-[#556b2f]"
+        >
+          Sample Projects
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+          <div
+            class="bg-white rounded-xl shadow-lg overflow-hidden transform transition duration-300 ease-in-out hover:scale-103"
+          >
+            <img
+              src="https://placehold.co/800x600/e0e5d8/556b2f?text=Project+Image+1"
+              alt="Project 1 Thumbnail"
+              class="w-full h-auto object-cover rounded-t-xl"
+              onerror="this.onerror=null;this.src='https://placehold.co/800x600/e0e5d8/556b2f?text=Image+Not+Found';"
+            />
+            <div class="p-6 text-center">
+              <h3 class="text-2xl font-semibold mb-2 text-[#556b2f]">
+                Project Title One
+              </h3>
+              <p class="text-gray-600">
+                A brief description of your first impressive software project.
+              </p>
+              <a
+                href="#"
+                class="mt-4 inline-block text-[#8fbc8f] hover:underline"
+                >Learn More</a
+              >
+            </div>
+          </div>
+          <div
+            class="bg-white rounded-xl shadow-lg overflow-hidden transform transition duration-300 ease-in-out hover:scale-103"
+          >
+            <img
+              src="https://placehold.co/800x600/e0e5d8/556b2f?text=Project+Image+2"
+              alt="Project 2 Thumbnail"
+              class="w-full h-auto object-cover rounded-t-xl"
+              onerror="this.onerror=null;this.src='https://placehold.co/800x600/e0e5d8/556b2f?text=Image+Not+Found';"
+            />
+            <div class="p-6 text-center">
+              <h3 class="text-2xl font-semibold mb-2 text-[#556b2f]">
+                Project Title Two
+              </h3>
+              <p class="text-gray-600">
+                Another compelling description of your second software project.
+              </p>
+              <a
+                href="#"
+                class="mt-4 inline-block text-[#8fbc8f] hover:underline"
+                >Learn More</a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="py-16 px-4 bg-[#e0e5d8]">
+      <div class="max-w-4xl mx-auto text-center">
+        <h2 class="text-4xl md:text-5xl font-bold mb-8 text-[#556b2f]">
+          About Me
+        </h2>
+        <p class="text-lg mb-4 text-[#556b2f]">
+          Hello! I'm <span class="font-semibold">Your Name</span>, a passionate
+          software developer with a keen eye for detail and a love for creating
+          intuitive and efficient applications. My expertise spans across
+          various technologies, and I enjoy bringing creative solutions to
+          complex problems.
+        </p>
+        <p class="text-lg text-[#556b2f]">
+          Beyond coding, I find inspiration in art, which influences my approach
+          to design and user experience.
+        </p>
+      </div>
+    </section>
+
+    <footer class="bg-[#556b2f] text-white py-8 px-4 text-center">
+      <p>&copy; 2023 Your Name. All rights reserved.</p>
+      <div class="mt-4">
+        <a href="#" class="text-white hover:text-[#8fbc8f] mx-2"
+          >Privacy Policy</a
+        >
+        <span class="text-white">|</span>
+        <a href="#" class="text-white hover:text-[#8fbc8f] mx-2">Contact</a>
+      </div>
+    </footer>
+  </body>
+</html>

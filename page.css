@@ -1,0 +1,47 @@
+ body {
+            font-family: 'Inter', sans-serif; /* Default font */
+            color: #556b2f; /* Olive green for text */
+            background-color: #f4f0e8; /* Soft off-white background */
+        }
+        h1, h2 {
+            font-family: 'Georgia', serif; /* Serif font for headings */
+        }
+        /* Custom styles for subtle background pattern or texture */
+        .hero-background {
+            /* Using image_22ec46.jpg for the hero background, similar to the minimalist theme */
+            background-image: url('image_22ec46.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            position: relative;
+            z-index: 0;
+        }
+        .hero-background::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(244, 240, 232, 0.85); /* Soft off-white overlay for text readability */
+            z-index: -1;
+        }
+        /* Style for the decorative divider with the second watercolor image */
+        .watercolor-divider {
+            background-image: url('image_22ec85.jpg'); /* Your second watercolor image for the divider */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            height: 200px; /* Adjust height as needed */
+            position: relative;
+            overflow: hidden; /* Ensures image doesn't bleed out of rounded corners */
+        }
+        .watercolor-divider::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(255, 255, 255, 0.6); /* Subtle white overlay */
+        }
