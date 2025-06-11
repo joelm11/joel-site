@@ -10,10 +10,20 @@
     />
   </head>
   <body class="bg-gray-100 text-gray-800">
-    <!-- Header -->
-    <header class="bg-white shadow p-6 mb-8">
-      <h1 class="text-4xl font-bold text-center">Joel Meuleman</h1>
-      <p class="text-center text-gray-600">Software Developer</p>
+    <!-- Hero Section with Background Artwork -->
+    <header
+      class="relative bg-cover bg-center h-64 flex flex-col justify-center items-center text-center text-white shadow mb-12"
+      style="background-image: url('resources/LeafBorder1.png')"
+    >
+      <div
+        class="bg-black bg-opacity-40 w-full h-full absolute top-0 left-0 z-0"
+      ></div>
+      <div class="z-10">
+        <h1 class="text-5xl font-extrabold drop-shadow-lg text-slate-100">
+          Joel Meuleman
+        </h1>
+        <p class="text-xl text-gray-200 mt-2">Software Developer</p>
+      </div>
     </header>
 
     <main class="container mx-auto px-4">
@@ -21,10 +31,10 @@
       <section class="mb-12">
         <h2 class="text-2xl font-semibold mb-4">Projects</h2>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <div class="bg-white p-6 rounded-2xl shadow-md">
+          <div class="bg-white p-6 rounded-2xl shadow-md flex flex-col h-full">
             <h3 class="text-xl font-bold mb-2">Ocean Shader</h3>
             <video
-              class="mb-2"
+              class="mb-2 rounded"
               src="resources/waves.mov"
               autoplay
               loop
@@ -36,12 +46,12 @@
             </p>
             <a
               href="https://github.com/joelm11/sound_anim/tree/waves"
-              class="text-indigo-500 hover:underline"
+              class="text-indigo-500 hover:underline mt-auto"
               >View project source</a
             >
           </div>
-          <!-- Next project -->
-          <div class="bg-white p-6 rounded-2xl shadow-md">
+
+          <div class="bg-white p-6 rounded-2xl shadow-md flex flex-col h-full">
             <h3 class="text-xl font-bold mb-2">
               Eclipsa Audio Formatting Tool
             </h3>
@@ -68,15 +78,35 @@
             </p>
             <a
               href="https://eclipsaaudiotools.com/"
-              class="text-indigo-500 hover:underline"
+              class="text-indigo-500 hover:underline mt-auto"
               >Eclipsa Audio Formatting Tool</a
             >
           </div>
-          <!-- Duplicate the card above for more projects -->
+
+          <div class="bg-white p-6 rounded-2xl shadow-md flex flex-col h-full">
+            <h3 class="text-xl font-bold mb-2">Pitchshifter API</h3>
+            <div class="mb-2">Original Audio</div>
+            <audio class="mb-2" src="resources/dialogue.wav" controls></audio>
+            <div class="mb-2">Pitched Audio</div>
+            <audio
+              class="mb-4"
+              src="resources/api-pitched.wav"
+              controls
+            ></audio>
+            <p class="text-gray-600 mb-4">
+              C++ API for pitchshifting voice recordings. Implements the phase
+              vocoder and windowed sinc resampling.
+            </p>
+            <a
+              href="https://github.com/joelm11/pitch-shift"
+              class="text-indigo-500 hover:underline mt-auto"
+              >View project source</a
+            >
+          </div>
         </div>
       </section>
 
-      <!-- Artworks Section -->
+      <!-- Artwork Section -->
       <section class="mb-12">
         <h2 class="text-2xl font-semibold mb-4">Artwork</h2>
         <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
@@ -94,7 +124,6 @@
               class="w-full h-48 object-cover"
             />
           </div>
-          <!-- Add more image cards as needed -->
         </div>
       </section>
     </main>
