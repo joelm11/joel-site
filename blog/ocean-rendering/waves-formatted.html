@@ -256,7 +256,7 @@
           mapping a pretty sky picture to it. In the fragment shader of the wave
           shader program, I check the camera angle, then sample the skybox
           texture to determine what colour to reflect off the surface pixel.
-          After implementing these changes, I arrive at this
+          After implementing these changes and fiddling with the wave parameters
         </p>
         <video
           src="./blog-wave-resources/skybox.mov"
@@ -268,14 +268,17 @@
           Not too bad! We see whites from the clouds reflected, as well as the
           blue of the sky. The wave function could still be more
           interesting/realistic, and the lighting params improved for more
-          natural-looking light. Implementing additional tweaks and techniques
-          of which I'll write later, (mostly implemented from
+          natural-looking light.
+        </p>
+        <p>
+          Implementing additional tweaks and techniques of which I'll write
+          later (mostly implemented from
           <a
             class="text-blue-700"
             ,
             href="https://www.youtube.com/watch?v=PH9q0HNBjT4&t=1054s"
             >Acerola's video</a
-          >) I finally produced this animation.
+          >), I finally produced this animation.
         </p>
         <video
           src="./blog-wave-resources/tweaked-params.mov"
