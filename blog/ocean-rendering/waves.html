@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Joel Meuleman" />
+  <meta name="dcterms.date" content="2025-06-12" />
+  <meta name="description" content="Rendering an ocean scene bit by bit" />
+  <title>Rendering the Ocean with OpenGL</title>
+  <style>
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      border: none;
+      border-top: 1px solid #1a1a1a;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+  </style>
+  <script
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"
+  type="text/javascript"></script>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Rendering the Ocean with OpenGL</h1>
+<p class="author">Joel Meuleman</p>
+<p class="date">2025-06-12</p>
+</header>
+<h1 id="rendering-the-ocean-with-opengl">Rendering the Ocean with
+OpenGL</h1>
+<h2 id="introduction">Introduction</h2>
+<p>I’ve always enjoyed staring at the ocean. But what if we had the
+ocean at home on the computer? This is the question I bravely asked as I
+set out to implement an OpenGL program to mimic the ocean.</p>
+<h2 id="why-opengl-also-some-vocab">Why OpenGL? ( also some vocab)</h2>
+<p><strong>OpenGL</strong> - Low level cross-platform graphics
+programming API.</p>
+<p><strong>Shader</strong> - Program that runs on the GPU.</p>
+<hr />
+<p>Why suffer through the pain of using OpenGL instead of using a
+higher-level graphics framework or library? As an engineer, wanting to
+know how things work is inherent to who I am. Programming at a low-ish
+level like this provides several benefits: it forces me to think harder
+about making my own abstractions, and it teaches me about
+(in)efficiencies with different implementations. Both these skills come
+in handy when debugging code made with higher level tools.</p>
+<p><em>As an aside, this post is not about teaching OpenGL basics, but
+rather about how a complex looking graphic can be from small simple
+pieces.</em></p>
+<h2 id="step-by-step-implementation">Step by Step Implementation</h2>
+<h3 id="initial-planning">Initial Planning</h3>
+<p>To begin, I should mention we’ll be doing the rendering through
+rasterization (as opposed to ray tracing/marching). This means we’ll be
+describing a scene in 3D space, then doing some algebra to project this
+3D world onto a 2D plane which determines our pixel colours. To render
+this scene, I’ll generate a plane of vertices, then displace these
+vertices with a wave function. Later, I’ll put this plane in a skybox
+when it’s time to make the waves look a bit more realistic with
+reflections. The final executable will utilize 2 shader programs: one to
+render the waves, and one to render the background.</p>
+<h3 id="rendering-a-plane">Rendering a Plane</h3>
+<p>Let’s first start by generating points for and rendering a simple
+plane. We generate evenly spaced points and record their index ordering
+for passing to the EBO for rendering.</p>
+<p>In the vertex shader, I displace the vertical position with a sine
+function <span class="math display">\[p = (x,sin(x,z), z)\]</span> In
+the fragment shader, I assign a purple colour to each pixel in the mesh.
+Finally, I displace the camera slightly so we can view the plane. <video
+src="./blog-wave-resources/wave.mov" controls=""><a
+href="./blog-wave-resources/wave.mov">sinewaveplane</a></video></p>
+<p>We have a wave! We can see we have motion and depth, but it would be
+nice if we had a bit of lighting off the surface of the mesh, so that we
+can better tell what’s going on.</p>
+<h3 id="lighting">Lighting</h3>
+<p>For this shader program, I chose to implement <a
+href="https://learnopengl.com/Lighting/Basic-Lighting">Blinn-Phong</a>
+lighting. This is a fundamental lighting model in computer graphics, and
+it’s extensible for adding later lighting features. There are 3 aspects
+to Blinn Phong lighting: ambient, specular, and diffuse light.</p>
+<p>To begin implementing this lighting method, the surface normal for
+each vertex is required. Thankfully, as we have a simple function for
+the displacement of each vertex, we have a simple derivative that will
+give us the <strong>exact</strong> normal for each vertex <span
+class="math display">\[dy/dx = cos(x)\]</span> Using the normal as
+calculated in the vertex shader we calculate the lighting contribution
+for each pixel. <video src="./blog-wave-resources/lit-wave.mov"
+controls=""><a
+href="./blog-wave-resources/lit-wave.mov">lightingsinewave</a></video>
+Nice! With the basic lighting done, we can implement more complex wave
+patterns.</p>
+<h3 id="improving-the-wave-displacement-algorithm">Improving the Wave
+Displacement Algorithm</h3>
+<p>With the basics out of the way, it’s time to look at more realistic
+wave algorithms for displacing our plane vertices. <a
+href="https://developer.nvidia.com/gpugems/gpugems/part-i-natural-effects/chapter-1-effective-water-simulation-physical-models">GPU
+Gems</a> describes how we can achieve more complex looking waves using a
+sum of sines calculation. <span class="math display">\[ y=\sum_{i =
+0}^{N}{f(x)} \hspace{12pt} \text{and} \hspace{12pt}
+\frac{dy}{dx}=\sum_{i = 0}^{N}{f&#39;(x)} \]</span> Thankfully, the
+derivative of the sum equals the sum of the derivative, which means we
+can more or less wrap our displacement and normal calculations in a
+loop. After adding some pseudo randomly generated wave parameters, and
+summing just 4 waves, we arrive at this animation. <video
+src="./blog-wave-resources/ss.mov" controls=""><a
+href="./blog-wave-resources/ss.mov">simple sum of sines
+animation</a></video></p>
+<p>Then, we change our wave function to one with steeper peaks and lower
+troughs by updating the displacement and normal computations in the
+vertex shader. <span class="math display">\[
+W_i(x, z, t) = 2A_i \times \left( \frac{\sin(\mathbf{D}_i \cdot (x, z)
+\times w_i + t \times \varphi_i) + 1}{2} \right)^k
+\]</span> <span class="math display">\[
+\frac{\partial}{\partial x}(W_i(x, z, t)) = k \times \mathbf{D}_i.x
+\times w_i \times A_i \times \left( \frac{\sin(\mathbf{D}_i \cdot (x, z)
+\times w_i + t \times \varphi_i) + 1}{2} \right)^{k-1} \times
+\cos(\mathbf{D}_i \cdot (x, z) \times w_i + t \times \varphi_i).
+\]</span></p>
+<p>This surface has more complexity, and we can spend time tweaking
+values to get exactly what we want later. <video
+src="./blog-wave-resources/ss-exp.mov" controls=""><a
+href="./blog-wave-resources/ss-exp.mov">exponential sum of sines
+animation</a></video></p>
+<h3 id="adding-a-skybox-and-reflections">Adding a Skybox and
+Reflections</h3>
+<p>In this stage, we add more realism to our surface by adding an
+atmosphere to view in the distance. To be somewhat realistic, this
+atmosphere must also be reflected off the surface of the water.</p>
+<p>We implement the skybox as a separate shader. We define a box
+surrounding our wave plane, and map a nice sky picture to it. In the
+fragment shader of the wave shader, we sample the skybox texture to
+determine what colour to reflect off the surface pixel. After
+implementing these changes, we arrive at this <video
+src="./blog-wave-resources/skybox.mov" controls=""><a
+href="./blog-wave-resources/skybox.mov">waves with
+skybox</a></video></p>
+<p>With some more tweaks that I’ll write about later (mostly stolen from
+<a
+href="https://www.youtube.com/watch?v=PH9q0HNBjT4&amp;t=1054s">Acerola’s
+video</a>) I got this animation. <video
+src="./blog-wave-resources/tweaked-params.mov" controls=""><a
+href="./blog-wave-resources/tweaked-params.mov">Nice
+waves</a></video></p>
+<h3 id="conclusion">Conclusion</h3>
+<p>Over the course of a couple sections, we’ve shown how we can
+implement a complex looking animation through little more than some
+basic calculus and linear algebra. I’ll likely post a follow-up blog
+where I implement a more realistic wave function, but this seems like a
+good place to stop without adding too much extra detail.</p>
+<h2 id="references">References</h2>
+<p><a
+href="https://developer.nvidia.com/gpugems/gpugems/part-i-natural-effects/chapter-1-effective-water-simulation-physical-models">GPU
+Gems</a></p>
+<p><a
+href="https://www.youtube.com/watch?v=PH9q0HNBjT4&amp;t=1054s">Acerola</a></p>
+</body>
+</html>
