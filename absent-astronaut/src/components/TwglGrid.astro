@@ -24,7 +24,7 @@
   }
 </style>
 
-<script>
+<script type="module">
   import * as twgl from "twgl.js";
   import { mat4 } from "gl-matrix";
 
@@ -57,23 +57,39 @@
       return;
     }
 
-    // Read site colors from CSS variables and convert hex to normalized RGB
+    // Read site colors from CSS variables and convert to normalized RGB
     const style = getComputedStyle(document.documentElement);
-    function hexToRgbNorm(hex: string) {
-      if (!hex) return [0, 0, 0];
-      hex = hex.trim();
+    function cssColorToRgbNorm(input) {
+      if (!input) return [0, 0, 0];
+      const s = input.trim();
+      // rgb(...) or rgba(...)
+      const rgbMatch = s.match(/rgba?\s*\(([^)]+)\)/i);
+      if (rgbMatch) {
+        const parts = rgbMatch[1].split(',').map(p => p.trim());
+        const r = parseFloat(parts[0]) / 255;
+        const g = parseFloat(parts[1]) / 255;
+        const b = parseFloat(parts[2]) / 255;
+        return [r, g, b];
+      }
+      // hex #rrggbb or #rgb
+      let hex = s;
       if (hex[0] === '#') hex = hex.slice(1);
       if (hex.length === 3) hex = hex.split('').map(c => c + c).join('');
-      const r = parseInt(hex.slice(0, 2), 16) / 255;
-      const g = parseInt(hex.slice(2, 4), 16) / 255;
-      const b = parseInt(hex.slice(4, 6), 16) / 255;
-      return [r, g, b];
+      if (/^[0-9a-fA-F]{6}$/.test(hex)) {
+        const r = parseInt(hex.slice(0, 2), 16) / 255;
+        const g = parseInt(hex.slice(2, 4), 16) / 255;
+        const b = parseInt(hex.slice(4, 6), 16) / 255;
+        return [r, g, b];
+      }
+      return [0, 0, 0];
     }
 
-    const primaryHex = style.getPropertyValue('--primary') || '#0f56a9';
-    const backgroundHex = style.getPropertyValue('--background') || '#fbfcfc';
-    const primaryRgb = hexToRgbNorm(primaryHex);
-    const backgroundRgb = hexToRgbNorm(backgroundHex);
+    const primaryVar = style.getPropertyValue('--primary') || '#0f56a9';
+    const backgroundVar = style.getPropertyValue('--background') || '#fbfcfc';
+    const primaryRgb = cssColorToRgbNorm(primaryVar);
+    const backgroundRgb = cssColorToRgbNorm(backgroundVar);
+
+    console.debug('TwglGrid colors:', { primaryVar, primaryRgb, backgroundVar, backgroundRgb });
 
     const programInfo = twgl.createProgramInfo(gl, [vs, fs]);
 
