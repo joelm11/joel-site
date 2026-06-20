@@ -22,7 +22,7 @@
   }
 </style>
 
-<script>
+<script type="module">
   import * as twgl from "twgl.js";
   import { mat4 } from "gl-matrix";
 
@@ -43,7 +43,8 @@
   `;
 
   function initCube() {
-    const canvas = document.getElementById("cube-canvas") as HTMLCanvasElement;
+    /** @type {HTMLCanvasElement | null} */
+    const canvas = document.getElementById("cube-canvas");
     if (!canvas) {
       console.error("Canvas element #cube-canvas not found");
       return;
@@ -76,10 +77,10 @@
     const viewProjectionMatrix = mat4.create();
     const finalMatrix = mat4.create();
 
-    function render(time: number) {
+    function render(time) {
       const seconds = time * 0.001;
 
-      twgl.resizeCanvasToDisplaySize(gl.canvas as HTMLCanvasElement);
+      twgl.resizeCanvasToDisplaySize(gl.canvas);
       gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
 
       gl.clearColor(0.9843, 0.9882, 0.9882, 1.0);
