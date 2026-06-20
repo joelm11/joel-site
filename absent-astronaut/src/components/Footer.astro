@@ -1,0 +1,82 @@
+---
+export let linkedin = "withastro";
+export let github = "withastro";
+export let email = "hello@withastro.com";
+---
+
+<footer class="site-footer">
+  <div class="footer-content">
+    <div>
+      <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      />
+    </div>
+
+    <div class="icons" role="navigation" aria-label="Social links">
+      <a
+        href={`https://www.linkedin.com/in/${linkedin}`}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="LinkedIn"
+        title="LinkedIn"
+      >
+        <i class="fab fa-linkedin" aria-hidden="true"></i>
+      </a>
+
+      <a
+        href={`https://github.com/${github}`}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="GitHub"
+        title="GitHub"
+      >
+        <i class="fab fa-github" aria-hidden="true"></i>
+      </a>
+
+      <a href={`mailto:${email}`} aria-label="Email" title="Email">
+        <i class="fas fa-envelope" aria-hidden="true"></i>
+      </a>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    padding: 1rem 0;
+    text-align: center;
+  }
+  .footer-content {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .icons {
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+  }
+  .icons a {
+    display: inline-flex;
+    width: 48px;
+    height: 48px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    background: transparent;
+    color: var(--primary, #0070f3);
+    text-decoration: none;
+    transition: transform 0.12s, background-color 0.12s, color 0.12s;
+  }
+  .icons a:hover {
+    transform: translateY(-2px);
+    background-color: rgba(0, 112, 243, 0.08);
+  }
+  .icons i {
+    font-size: 26px;
+    line-height: 1;
+    display: block;
+  }
+</style>
