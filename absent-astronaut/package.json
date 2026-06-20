@@ -12,7 +12,8 @@
     "astro": "astro"
   },
   "dependencies": {
-    "astro": "^6.4.7"
+    "astro": "^6.4.7",
+    "twgl.js": "^7.0.0"
   },
   "devDependencies": {
     "prettier": "^3.8.4",
