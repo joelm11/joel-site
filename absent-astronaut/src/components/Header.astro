@@ -1,7 +1,21 @@
-<header class="header">
-  <h1 class="header-title">Joel Meuleman</h1>
+---
+import Spinner from "./Spinner.astro";
+---
+
+<header>
+  <div class="header-content">
+    <h1 class="header-title">Joel Meuleman</h1>
+    <Spinner />
+  </div>
   <a href="/">Home</a>
   <a href="/about/">About</a>
   <a href="/about/">Projects</a>
   <a href="/blog/">Blog</a>
 </header>
+
+<style>
+  .header-content {
+    display: flex;
+    gap: 2rem;
+  }
+</style>
