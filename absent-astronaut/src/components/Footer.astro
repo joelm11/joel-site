@@ -43,6 +43,8 @@ export let email = "hello@withastro.com";
 
 <style>
   .site-footer {
+    --icon-size: 3rem;
+    --icon-font: 1.625rem;
     padding: 1rem 0;
     text-align: center;
   }
@@ -60,22 +62,25 @@ export let email = "hello@withastro.com";
   }
   .icons a {
     display: inline-flex;
-    width: 48px;
-    height: 48px;
+    width: var(--icon-size);
+    height: var(--icon-size);
     align-items: center;
     justify-content: center;
-    border-radius: 8px;
+    border-radius: 0.5rem;
     background: transparent;
-    color: var(--primary, #0070f3);
+    color: var(--primary);
     text-decoration: none;
-    transition: transform 0.12s, background-color 0.12s, color 0.12s;
+    transition:
+      transform 0.12s,
+      background-color 0.12s,
+      color 0.12s;
   }
   .icons a:hover {
-    transform: translateY(-2px);
-    background-color: rgba(0, 112, 243, 0.08);
+    transform: translateY(-0.125rem);
+    background-color: var(--primary-container);
   }
   .icons i {
-    font-size: 26px;
+    font-size: var(--icon-font);
     line-height: 1;
     display: block;
   }
