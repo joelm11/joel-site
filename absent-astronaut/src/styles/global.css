@@ -81,15 +81,19 @@ html {
   font-family:
     ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", "Segoe UI Mono",
     "Courier New", monospace;
+  height: 100%;
 }
 
 body {
-  margin: 0 auto;
+  margin: 0;
   width: 100%;
   padding: 1rem;
   line-height: 1.5;
   background-color: var(--background);
   color: var(--on-background);
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
 * {
@@ -110,6 +114,10 @@ header,
 footer {
   background: transparent;
   color: var(--on-surface);
+}
+
+main {
+  flex: 1 1 auto;
 }
 
 .card {
