@@ -52,9 +52,10 @@ function initCube() {
 
   // randomization helpers and initial state
   const rand = (min, max) => Math.random() * (max - min) + min;
-  const tx = rand(-1.2, 1.2);
-  const ty = rand(-0.8, 0.8);
-  const tz = rand(-0.6, 0.6);
+  // keep the cube centered; only rotations remain randomized
+  const tx = 0;
+  const ty = 0;
+  const tz = 0;
 
   const initialRotX = rand(0, Math.PI * 2);
   const initialRotY = rand(0, Math.PI * 2);
