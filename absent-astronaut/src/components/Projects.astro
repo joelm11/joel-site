@@ -1,0 +1,178 @@
+---
+
+---
+
+<section class="projects-container">
+  <section class="projects-section">
+    <h2 class="section-title">Projects</h2>
+    <div class="projects-grid">
+      <div class="project-card">
+        <h3 class="project-title">Ocean Shader</h3>
+        <video
+          class="media"
+          src="/resources/waves.mov"
+          autoplay
+          loop
+          muted
+          controls></video>
+        <p class="project-desc">
+          OpenGL shader to render semi-realistic waves.
+        </p>
+        <a
+          href="https://github.com/joelm11/sound_anim/tree/waves"
+          class="project-link">View project source</a
+        >
+      </div>
+
+      <div class="project-card">
+        <h3 class="project-title">Eclipsa Audio Formatting Tool</h3>
+        <div id="eclipsa-slideshow" class="eclipsa-slideshow">
+          <img
+            src="/resources/eclipsaaudiotool1.png"
+            class="slideshow-image visible"
+          />
+          <img src="/resources/eclipsaaudiotool2.png" class="slideshow-image" />
+        </div>
+        <p class="project-desc">
+          Tool to facilitate easier encoding of audio sources into the Eclipsa
+          audio format.
+        </p>
+        <p class="project-desc">
+          Features an in-browser IAMF spec compliant audio renderer. Mixes can
+          be exported for encoding, then downloaded as one IAMF file.
+        </p>
+        <a href="https://eclipsaaudiotools.com/" class="project-link"
+          >Eclipsa Audio Formatting Tool</a
+        >
+      </div>
+
+      <div class="project-card">
+        <h3 class="project-title">Pitchshifter API</h3>
+        <div class="media-label">Original Audio</div>
+        <audio class="media" src="/resources/dialogue.wav" controls></audio>
+        <div class="media-label">Pitched Audio</div>
+        <audio class="media" src="/resources/api-pitched.wav" controls></audio>
+        <p class="project-desc">
+          C++ API for pitchshifting voice recordings. Implements the phase
+          vocoder and windowed sinc resampling.
+        </p>
+        <a href="https://github.com/joelm11/pitch-shift" class="project-link"
+          >View project source</a
+        >
+      </div>
+    </div>
+  </section>
+</section>
+
+<script>
+  const images = document.querySelectorAll(
+    "#eclipsa-slideshow .slideshow-image",
+  );
+  let currentImage = 0;
+  setInterval(() => {
+    images[currentImage].classList.remove("visible");
+    currentImage = (currentImage + 1) % images.length;
+    images[currentImage].classList.add("visible");
+  }, 8000);
+</script>
+
+<style>
+  .projects-container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 1rem;
+  }
+
+  .section-title {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: var(--on-background);
+  }
+
+  .projects-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  @media (min-width: 700px) {
+    .projects-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  @media (min-width: 1000px) {
+    .projects-grid {
+      grid-template-columns: 1fr 1fr 1fr;
+    }
+  }
+
+  .project-card {
+    background: var(--surface);
+    color: var(--on-surface);
+    border: 1px solid var(--surface-variant);
+    padding: 1rem;
+    border-radius: 14px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+    display: flex;
+    flex-direction: column;
+    min-height: 220px;
+  }
+
+  .project-title {
+    font-size: 1.125rem;
+    margin-bottom: 0.5rem;
+    color: var(--primary);
+  }
+
+  .media {
+    margin-bottom: 0.5rem;
+    border-radius: 8px;
+    max-width: 100%;
+    height: auto;
+  }
+
+  .media-label {
+    margin-top: 0.25rem;
+    margin-bottom: 0.25rem;
+    color: var(--on-surface-variant);
+    font-size: 0.95rem;
+  }
+
+  .project-desc {
+    color: var(--on-surface-variant);
+    margin-bottom: 0.75rem;
+    flex: none;
+  }
+
+  .project-link {
+    color: var(--primary);
+    margin-top: auto;
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+  }
+
+  .eclipsa-slideshow {
+    position: relative;
+    width: 100%;
+    height: 12rem;
+    margin-bottom: 0.5rem;
+    overflow: hidden;
+    border-radius: 8px;
+    background: var(--surface-variant);
+  }
+
+  .slideshow-image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+  }
+
+  .slideshow-image.visible {
+    opacity: 1;
+  }
+</style>
