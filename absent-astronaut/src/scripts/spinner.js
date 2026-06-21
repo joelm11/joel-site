@@ -50,6 +50,21 @@ function initCube() {
   const viewProjectionMatrix = mat4.create();
   const finalMatrix = mat4.create();
 
+  // randomization helpers and initial state
+  const rand = (min, max) => Math.random() * (max - min) + min;
+  const tx = rand(-1.2, 1.2);
+  const ty = rand(-0.8, 0.8);
+  const tz = rand(-0.6, 0.6);
+
+  const initialRotX = rand(0, Math.PI * 2);
+  const initialRotY = rand(0, Math.PI * 2);
+  const initialRotZ = rand(0, Math.PI * 2);
+
+  // rotation speeds (radians per second), randomized magnitude and sign
+  const rotSpeedX = rand(0.2, 1.0) * (Math.random() < 0.5 ? -1 : 1);
+  const rotSpeedY = rand(0.2, 1.0) * (Math.random() < 0.5 ? -1 : 1);
+  const rotSpeedZ = rand(0.2, 1.0) * (Math.random() < 0.5 ? -1 : 1);
+
   function render(time) {
     const seconds = time * 0.001;
 
@@ -66,11 +81,13 @@ function initCube() {
     const zFar = 100.0;
     mat4.perspective(projectionMatrix, fov, aspect, zNear, zFar);
 
-    mat4.lookAt(viewMatrix, [0, 0, 5], [0, 0, 0], [0, 1, 0]);
+    mat4.lookAt(viewMatrix, [0, 0, 7], [0, 0, 0], [0, 1, 0]);
 
     mat4.identity(modelMatrix);
-    mat4.rotateX(modelMatrix, modelMatrix, seconds * 0.5);
-    mat4.rotateY(modelMatrix, modelMatrix, seconds * 0.8);
+    mat4.translate(modelMatrix, modelMatrix, [tx, ty, tz]);
+    mat4.rotateX(modelMatrix, modelMatrix, initialRotX + seconds * rotSpeedX);
+    mat4.rotateY(modelMatrix, modelMatrix, initialRotY + seconds * rotSpeedY);
+    mat4.rotateZ(modelMatrix, modelMatrix, initialRotZ + seconds * rotSpeedZ);
 
     mat4.multiply(viewProjectionMatrix, projectionMatrix, viewMatrix);
     mat4.multiply(finalMatrix, viewProjectionMatrix, modelMatrix);

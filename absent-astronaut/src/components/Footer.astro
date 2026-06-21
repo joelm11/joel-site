@@ -2,6 +2,7 @@
 export let linkedin = "joel-meuleman-31b246185/";
 export let github = "joelm11";
 export let email = "j.meuleman11@gmail.com";
+const year = new Date().getFullYear();
 ---
 
 <footer class="site-footer">
@@ -37,6 +38,9 @@ export let email = "j.meuleman11@gmail.com";
       <a href={`mailto:${email}`} aria-label="Email" title="Email">
         <i class="fas fa-envelope" aria-hidden="true"></i>
       </a>
+    </div>
+    <div class="copyright" aria-hidden="false">
+      <small>© {year} Joel Meuleman</small>
     </div>
   </div>
 </footer>
@@ -83,5 +87,12 @@ export let email = "j.meuleman11@gmail.com";
     font-size: var(--icon-font);
     line-height: 1;
     display: block;
+  }
+  .copyright {
+    width: 100%;
+    text-align: center;
+    margin-top: 0.25rem;
+    font-size: 0.875rem;
+    opacity: 0.9;
   }
 </style>
