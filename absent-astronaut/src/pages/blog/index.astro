@@ -1,5 +1,48 @@
 ---
 import Base from "../../layouts/Base.astro";
+
+const postModules = import.meta.glob("./posts/*.{md,mdx}");
+
+const posts = await Promise.all(
+  Object.entries(postModules).map(async ([path, resolver]) => {
+    const mod: any = await resolver();
+    const url = path.replace("./posts/", "/blog/posts/").replace(/\.(md|mdx)$/, "/");
+    return {
+      url,
+      frontmatter: mod.frontmatter,
+    };
+  }),
+);
+
+const filteredPosts = posts
+  .filter((post) => !post.frontmatter.draft)
+  .sort(
+    (a, b) =>
+      new Date(b.frontmatter.date).valueOf() -
+      new Date(a.frontmatter.date).valueOf(),
+  );
 ---
 
-<Base pageTitle="Blogs" />
+<Base pageTitle="Blogs">
+  <section>
+    <ul>
+      {
+        filteredPosts.map((post) => (
+          <li>
+            <a href={post.url}>
+              <h2>{post.frontmatter.title}</h2>
+            </a>
+            <time datetime={post.frontmatter.date}>
+              {new Date(
+                post.frontmatter.date + "T00:00:00",
+              ).toLocaleDateString()}
+            </time>
+            {post.frontmatter.description && (
+              <p>{post.frontmatter.description}</p>
+            )}
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+</Base>
