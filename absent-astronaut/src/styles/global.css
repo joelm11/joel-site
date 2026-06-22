@@ -133,3 +133,13 @@ main {
   padding: 1rem;
   border-radius: 6px;
 }
+
+/* Ensure block math equations don't break mobile layouts */
+.katex-display {
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 1rem;
+
+  -webkit-overflow-scrolling: touch;
+}
