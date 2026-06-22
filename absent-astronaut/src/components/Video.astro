@@ -1,0 +1,60 @@
+---
+const {
+  src,
+  poster = "",
+  alt = "",
+  controls = true,
+  autoplay = false,
+  loop = false,
+  muted = false,
+} = Astro.props;
+---
+
+<figure class="video-wrapper">
+  <video
+    src={src}
+    poster={poster}
+    aria-label={alt}
+    controls={controls}
+    autoplay={autoplay ? true : undefined}
+    loop={loop ? true : undefined}
+    muted={muted ? true : undefined}
+    playsinline></video>
+
+  {
+    Astro.slots.default ? (
+      <figcaption class="caption">
+        <slot />
+      </figcaption>
+    ) : alt ? (
+      <figcaption class="caption">{alt}</figcaption>
+    ) : null
+  }
+</figure>
+
+<style>
+  .video-wrapper {
+    max-width: min(100%, 50vw);
+    margin: 1.25rem auto;
+    border-radius: 10px;
+    overflow: hidden;
+    background: #000;
+    box-shadow: 0 8px 24px rgba(5, 10, 25, 0.25);
+  }
+
+  .video-wrapper video {
+    display: block;
+    width: 100%;
+    height: auto;
+    vertical-align: middle;
+    background: #000;
+  }
+
+  .caption {
+    font-size: 0.92rem;
+    color: #94a3b8;
+    padding: 0.6rem 0.8rem;
+    background: rgba(0, 0, 0, 0.02);
+    text-align: left;
+  }
+</style>
