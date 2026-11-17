@@ -1,0 +1,51 @@
+---
+const {
+  src,
+  alt = "",
+  controls = true,
+  autoplay = false,
+  loop = false,
+} = Astro.props;
+---
+
+<figure class="audio-wrapper">
+  <audio
+    src={src}
+    aria-label={alt}
+    controls={controls}
+    autoplay={autoplay ? true : undefined}
+    loop={loop ? true : undefined}></audio>
+
+  {
+    Astro.slots.default ? (
+      <figcaption class="caption">
+        <slot />
+      </figcaption>
+    ) : alt ? (
+      <figcaption class="caption">{alt}</figcaption>
+    ) : null
+  }
+</figure>
+
+<style>
+  .audio-wrapper {
+    max-width: min(100%, 34rem);
+    margin: 1.25rem auto;
+    padding: 0.75rem;
+    border-radius: 10px;
+    background: var(--surface-variant);
+    box-shadow: 0 8px 24px rgba(5, 10, 25, 0.15);
+  }
+
+  .audio-wrapper audio {
+    display: block;
+    width: 100%;
+  }
+
+  .caption {
+    font-size: 0.92rem;
+    color: var(--on-surface-variant);
+    padding: 0.6rem 0.2rem 0;
+    text-align: left;
+  }
+</style>

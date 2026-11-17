@@ -6,5 +6,16 @@ const { frontmatter } = Astro.props;
 
 <Base>
   <meta charset="utf-8" />
-  <slot />
+  <div class="post-content">
+    <slot />
+  </div>
 </Base>
+
+<style>
+  .post-content :global(img) {
+    display: block;
+    max-width: min(990px, 100%);
+    height: auto;
+    margin: 1.25rem auto;
+  }
+</style>

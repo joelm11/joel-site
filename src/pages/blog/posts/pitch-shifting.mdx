@@ -1,0 +1,120 @@
+---
+layout: ../../../layouts/BlogPost.astro
+title: "Pitch Shifting"
+author: "Joel Meuleman"
+date: "2026-11-17"
+tags: ["audio", "dsp", "blog", "signal processing", "software"]
+alt: "Spectrogram of a pitch shifted voice recording"
+description: "Building a simple pitch shifter from resampling and the phase vocoder"
+draft: false
+---
+
+import Audio from "../../../components/Audio.astro";
+
+# Pitch Shifting
+
+Pitch shifting algorithms have proven an excellent gateway into audio signal processing for me. They touch two deeply fundamental areas of signal processing: resampling and spectral analysis with modification.
+
+As the name suggests, these algorithms shift frequency components while preserving sound structure and characteristics. These algorithms find use as a vocal effect, most notably in automatic pitch correction tools e.g. autotune.
+
+## Digital Audio Processing Basics
+
+While derivation of the pitch shifting algorithm is straightforward, we must introduce two essential tools to get us there.
+
+### Sampling
+
+In calculus we model signals as $y=x(t)$ where $t$ is continuous in time. To process real world signals digitally, we must convert this continuous time signal to a discrete time signal $y=x[n]$. To do this, an Analog to Digital Converter (ADC) samples the real world signal at rate $F_S$ (with period $T_S=\frac{1}{F_S}$), the **sample rate**, or **sample frequency**. Provided the sample rate is sufficiently higher ($F_S>2*F_{Max}$) than the highest frequency component of the signal to be sampled, we can rest easy knowing our sampled signal closely represents the real world continuous signal.
+
+Here we see continuous time signal $x(t)=sin(2\pi ft)$ and its discrete counterpart
+
+$x[n] = \sin(2\pi f * n T_S)$.
+
+![Continuous time sine wave and its discrete sampled counterpart](/resources/posts/pitch-shifting/sampling.png)
+
+<Audio src="/resources/posts/pitch-shifting/sine-src.wav" alt="4 Hz sine wave sampled at the source rate" />
+
+### Frequency Analysis
+
+Examining signal frequency content is a fundamental tool in the DSP toolkit. To do this, we use the Discrete Time Fourier Transform (DTFT) commonly implemented and referred to as the Fast Fourier Transform (FFT).
+
+$$X[k] = \sum_{n=0}^{N-1} x[n] e^{-i \frac{2\pi}{N} k n}$$
+
+Scary! Without diving into this scary looking formula, here's a simple (hand-wavey) way to reason about what the transform does: the Fourier transform computes a correlation of sinusoidal waves of increasing frequency with $x[n]$.
+
+Let's take the FFT of our simple sine wave from earlier.
+
+![Magnitude and phase spectra of the sampled sine wave](/resources/posts/pitch-shifting/sine-fft.png)
+
+These graphs confirm what we know to be true about our signal. Firstly, that our signal is indeed a 4Hz sine wave. Secondly, that our signal has a phase of $-\pi / 2$. This phase offset of our signal is due to the FFT correlating the real part of the signal with cosines, not sines.
+
+With these tools at our disposal, let's proceed to the problem at hand - pitch shifting.
+
+## Pitch Shifting
+
+### Pitch Modification
+
+If you've ever had the pleasure of playing a recording back at different speeds, you've likely already pitch shifted a signal yourself. Without pitch correction, playing a record back at 2x speed gives an *Alvin and The Chipmunks* style of high pitched voicings, while halving the playback speed makes voicings low and robotic. By doubling the playback speed of a signal sampled at $F_S$, you double the frequencies of the signal while halving the playback time. It turns out this simple rate modification is an effective way to shift frequencies!
+
+With $x[n] = \sin(2\pi f * n T_S)$ as our input signal, we've made $x[n] = \sin(2\pi * 2  f * n * T_S)$ by doubling the playback rate. To illustrate, here is the spectrum of our simple sine wave, played back at double the rate it was sampled at.
+
+![Spectrum of the sine wave played back at double the sample rate](/resources/posts/pitch-shifting/shifted-sine-spectra.png)
+
+<Audio src="/resources/posts/pitch-shifting/sine-src-2x.wav" alt="Sine wave played back at double the source rate" />
+
+Changing the sample rate is an effective way to pitch shift our signal. For our requirements though, we'd like to preserve the cadence and duration of the original audio signal, both of which resampling modifies.
+
+### Duration Modification
+
+To use resampling as a pitch shifting mechanism, we need to change the duration of our signal while preserving prosody and frequency characteristics. Stretching and compressing the distance between samples is essentially what we were doing during resampling, so what else could we try?
+
+We'll be experimenting with this speech sample.
+
+![Waveform of the speech sample used for the experiments](/resources/posts/pitch-shifting/author-sample.png)
+
+<Audio src="/resources/posts/pitch-shifting/author-src.wav" alt="Original speech sample" />
+
+### Windowing then Stretching
+
+One approach is to take windowed frames of the input signal, then move those in relation to each other as shown here.
+
+![Time domain view of the windowed and spaced frames](/resources/posts/pitch-shifting/time-domain-windowed.png)
+
+<Audio src="/resources/posts/pitch-shifting/spaced-windowed.wav" alt="Speech sample stretched by spacing windowed frames" />
+
+This *kind of* works. The duration of the signal is longer, transients aren't as harsh (though still dominant) due to the windowing, and the speech is almost intelligible.
+
+Audio modified in such a way suffers from an additional defect - *phasiness*. The speech sounds discontinuous, robotic, and unnatural. Spacey. This is largely because we didn't consider the phase of the signal when we spaced it so. In other words, the offset of each wave of the constituent signal must align with where each wave left off in the prior frame. The time-domain solution for this is an algorithm called Time Domain Pitch Synchronous Overlap Add (say that 10x fast) or TDPSOLA. Its frequency domain equivalent (I believe a more elegant algorithm) is the Phase Vocoder.
+
+### The Phase Vocoder
+
+If we were to compare the magnitude and phase plots of two successive frames from the previous experiment, what would we see? In the magnitude plot, we would observe the dominant sinusoidal components of the frames. In the phase plot, we would observe the phase offsets of these sinusoidal components, with phase offsets advanced by the distance between windows. Because the frames examined are largely overlapping, we expect the magnitudes and phases to be highly correlated.
+
+![Time domain view of two successive analysis frames](/resources/posts/pitch-shifting/phase-vocoder-analysis.png)
+
+![Magnitude and phase plots of the successive frames](/resources/posts/pitch-shifting/phase-vocoder-windowed-plots.png)
+
+Although this is a simplified example, we see: the dominant frequency component via the magnitude plots, and the phase advances between successive windows.
+
+Knowing this, what if we use our earlier approach of adjusting the positions of frames, but this time adjust each frame's phase according to its displacement? This is the phase vocoder algorithm!
+
+Here is the audio sample stretched by the same duration, but this time vocoded.
+
+<Audio src="/resources/posts/pitch-shifting/pv-author.wav" alt="Speech sample time stretched with the phase vocoder" />
+
+A massive improvement over our time domain approach!
+
+The vocoder algorithm is not perfect though. There's some graininess and some phasiness due to properties of the algorithm and of speech that aren't handled by the algorithm. Given the simplicity and effectiveness of the algorithm, this remains sufficient for our purposes.
+
+## Phase Vocoder with Resampling
+
+With these two pieces, we have everything we need for a simple pitch shifter. If we want to shift pitch upwards, we first expand the signal in time, then resample it back down to the original length. By expanding then compressing our signal, we've successfully moved the frequencies upwards. The opposite is true for down shifting: a time compression follow by expansion by resampling.
+
+Here's our pitch shifting algorithm applied to the speech sample, shifting both up and down.
+
+<Audio src="/resources/posts/pitch-shifting/ps-author-up.wav" alt="Speech sample pitch shifted up" />
+
+<Audio src="/resources/posts/pitch-shifting/ps-author-down.wav" alt="Speech sample pitch shifted down" />
+
+## Conclusion
+
+That's all there is to it! That's all the steps to building a simple pitch shifter, with some lightweight mathematics as well. In a subsequent post, I'll go into how we can use these algorithms to implement our own autotune plugin.
