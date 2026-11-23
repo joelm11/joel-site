@@ -18,4 +18,8 @@ const { frontmatter } = Astro.props;
     height: auto;
     margin: 1.25rem auto;
   }
+
+  .post-content :global(img.half) {
+    max-width: min(495px, 100%);
+  }
 </style>
