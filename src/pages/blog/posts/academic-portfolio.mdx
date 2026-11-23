@@ -1,0 +1,120 @@
+---
+layout: ../../../layouts/AcademicPortfolio.astro
+title: "Academic Portfolio"
+author: "Joel Meuleman"
+date: "2026-11-21"
+tags: ["portfolio", "academic", "resume"]
+alt: "Academic portfolio of Joel Meuleman"
+description: "Password-protected academic portfolio."
+draft: true
+---
+
+# Academic Portfolio
+
+**Joel Meuleman**
+**B.Eng. in Electrical Engineering** — University of Victoria, 2023
+
+[Curriculum Vitae](/resources/posts/academic-portfolio/curriculum-vitae.pdf)
+
+## Technical Focus
+
+I'm an electrical engineer with a background in software development, embedded systems, and digital signal processing. I'm interested in expanding my expertise in power systems engineering, and finding interesting ways to combine my current skill set and interests in this domain.
+
+## Professional Experience
+
+### Software Engineer | A-CX
+
+_Software Consulting - 2 years post-graduation_
+
+Developed DAW plugins enabling spatial audio workflows in the Eclipsa Audio format, taking ownership of key components across real-time audio processing, visualization, and software distribution.
+
+- Shipped real-time surround sound rendering and ITU loudness measurement algorithms.
+- Developed 3D graphics pipelines for spatial audio visualization.
+- Built and maintained build pipelines and distribution infrastructure.
+
+### Firmware Engineering Student | Solidigm
+
+_SSD Power & Thermal Management_
+
+Developed SSD power and thermal firmware, applying control algorithms and electronics expertise to regulate drive temperature, maximize performance, and accelerate hardware–software development.
+
+- Implemented thermal control algorithms based on technical white papers.
+- Validated firmware changes through laboratory testing and electronic measurements.
+- Bridged hardware and software teams to support firmware development and hardware testing and validation.
+
+## Selected Software Projects
+
+### Autotune
+
+An online pitch correction tool combining several algorithms: the phase vocoder for time stretching, sinc resampling, and YIN for pitch detection. The pitch correction tool is wrapped with some plugin library code so that it may be used in a DAW.
+
+<img
+  src="/resources/posts/academic-portfolio/june-plugin.png"
+  alt="Autotune pitch correction DAW plugin interface"
+  class="half"
+/>
+
+_[Phase Vocoder Writeup](/blog/posts/pitch-shifting/)_
+_[Autotune Github](https://github.com/joelm11/autotune)_
+
+### Wave Rendering
+
+Simulating wave motion and lighting with graphics shaders. Uses C++ abstractions built over OpenGL to hide typical graphics boilerplate.
+
+_[Wave Rendering Writeup](/blog/posts/waves/)_
+
+### Text to Speech
+
+#### Concatenative Synthesis
+
+Implementation of Hunt and Black's concatenative speech synthesis via unit selection from a diphone database.
+
+[Text to Speech Phoneme DB Github](https://github.com/joelm11/TTS-ConcatenativeSynthesis)
+
+#### Deep Neural Network Synthesis
+
+Scaffolding and implementation of Tacotron2 TTS deep neural network in PyTorch.
+
+[Text to Speech DNN Github](https://github.com/joelm11/tacotron)
+
+## Selected Electronics and Embedded Projects
+
+### Capstone - Reflow Solder Surface
+
+<img
+  src="/resources/posts/academic-portfolio/capstone-table.jpg"
+  alt="SMD reflow hot plate capstone project"
+  class="half"
+/>
+
+Hot plate for SMD reflow. I led the core embedded design, covering MCU and peripheral selection as well as schematic and pinout layout for the PCB. From there, I implemented sensor fusion and the temperature control loop, and developed the user interface using an LCD and rotary encoder.
+
+### H-Bridge and Stepper Motor Driver - Linear Power Supply
+
+Two simple power electronics projects I did early in my studies. In both cases, I simulated the circuit in SPICE, prototyped the circuit on a breadboard, then manufactured it as a PCB.
+
+- A dual H-Bridge with a push-pull FET driving circuit, used to drive a stepper motor.
+- A dual rail power supply with a rectifier and two linear regulators for an at-home lab supply.
+
+![H-bridge stepper driver and linear power supply projects](/resources/posts/academic-portfolio/electronics-projects-photo.png)
+
+## Relevant Coursework
+
+![Relevant coursework table listing courses, grades, and projects](/resources/posts/academic-portfolio/relevant-coursework.png)
+
+- [DCT Report](/resources/posts/academic-portfolio/dct-report.pdf)
+- [Capstone Report](/resources/posts/academic-portfolio/capstone-report.pdf)
+- [Wien Bridge Report](/resources/posts/academic-portfolio/wien-bridge-report.pdf)
+
+## Addendum
+
+<div class="image-row">
+  <img
+    src="/resources/posts/academic-portfolio/solidigm-photo.png"
+    alt="Joel Meuleman at the Solidigm office"
+  />
+  <img
+    src="/resources/posts/academic-portfolio/solidigm-badge.jpeg"
+    alt="Joel Meuleman's Solidigm employee badge"
+  />
+</div>

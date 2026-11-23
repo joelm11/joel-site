@@ -1,0 +1,22 @@
+---
+import BlogPost from "./BlogPost.astro";
+import PasswordGate from "../components/PasswordGate.astro";
+
+const { frontmatter } = Astro.props;
+---
+
+<BlogPost
+  frontmatter={frontmatter}
+  pageTitle={frontmatter.title}
+  showPageTitle={false}
+>
+  <PasswordGate
+    storageKey="academic-portfolio-unlocked"
+    passwordHashes={[
+      "51b6c6165608bce54b556882436fea34fd980022f7611c75a254d1f051e07d85",
+      "5db47e2fb893d5a0ca6232415f7d73928c1666551977ca5202332a1a8e13c3a7",
+    ]}
+  >
+    <slot />
+  </PasswordGate>
+</BlogPost>
